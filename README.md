@@ -1,6 +1,12 @@
 # virtualization-lab
 
+**Alumna:** Keyla Yunuette Serna Illescas
+
 Workshop "Containerizing and Deploying a Java Web Application" — una pequeña API REST en Spring Boot, empaquetada como imagen Docker, ejecutada en contenedores aislados, orquestada con Docker Compose junto a MongoDB, publicada en Docker Hub y desplegada en una instancia AWS EC2.
+
+## Video de demostración
+
+Despliegue local (Docker/Compose) y en AWS EC2 funcionando: **[Ver video en YouTube](https://youtu.be/_DvAMjv61oY)**
 
 ## Propósito
 
