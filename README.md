@@ -224,7 +224,71 @@ Para el escenario pequeño, EC2 es técnicamente viable pero económicamente ine
 
 ## Evidencia
 
-*(Agregar aquí las capturas de pantalla: ejecución local, `docker ps` con los 3 contenedores aislados, `docker compose ps` con web+db, el repositorio en Docker Hub, la conexión SSH y `docker ps`/`docker logs` en EC2, la respuesta `Hello, AWS!`, y la estimación de la AWS Pricing Calculator.)*
+### Aislamiento de contenedores (Parte 2)
+
+Tres contenedores del mismo image corriendo simultáneamente en puertos distintos (`34000`, `34001`, `34002`), cada uno respondiendo de forma independiente:
+
+![Comandos docker run aislamiento](evidencia/docker-isolamiento-3-contenedores.png)
+
+| Contenedor 1 | Contenedor 2 | Contenedor 3 |
+|---|---|---|
+| ![Hello Container 1](evidencia/docker-hello-container-1.png) | ![Hello Container 2](evidencia/docker-hello-container-2.png) | ![Hello Container 3](evidencia/docker-hello-container-3.png) |
+
+### Docker Compose — web + MongoDB (Parte 3)
+
+Build y levantamiento de los servicios `web` y `db`:
+
+![docker compose up --build](evidencia/docker-compose-up-build.png)
+
+Respuesta de la app corriendo detrás de Compose:
+
+![Hello Compose](evidencia/docker-compose-hello.png)
+
+Inserción y lectura de un documento en MongoDB, dentro del contenedor `db`:
+
+![mongosh insertOne y find](evidencia/docker-compose-mongo-insert.png)
+
+### Publicación en Docker Hub (Parte 4)
+
+`docker login`, `docker tag` y `docker push` de la imagen:
+
+![docker push terminal](evidencia/dockerhub-push-terminal.png)
+
+Tag `1.0` visible en el repositorio público de Docker Hub:
+
+![Docker Hub tags](evidencia/dockerhub-tags.png)
+
+### Despliegue en AWS EC2 (Parte 5)
+
+Security Group con SSH (22) restringido a la IP del desarrollador y el puerto de la app (8080) abierto:
+
+![Security Group](evidencia/aws-security-group.png)
+
+Conexión SSH a la instancia e instalación de Docker (AWS Academy Learner Lab):
+
+![yum update / instalación Docker](evidencia/aws-ec2-yum-update.png)
+
+Logs del contenedor corriendo en la instancia EC2 (Spring Boot escuchando en el puerto 9000):
+
+![Logs Spring Boot en EC2](evidencia/aws-ec2-logs-springboot.png)
+
+Respuesta pública desde la instancia EC2:
+
+![Hello, AWS!](evidencia/aws-hello-aws.png)
+
+Instancias EC2 en ejecución (`virtualization-lab` y `webframework-server`):
+
+![Instancias EC2](evidencia/aws-ec2-instances-list.png)
+
+### Estimación de costos — AWS Pricing Calculator (Parte 6)
+
+Detalle de la instancia `t4g.nano` y opciones de pago (bajo demanda ≈ $3.07–3.80/mes de cómputo antes de EBS):
+
+![AWS Pricing Calculator detalle](evidencia/aws-pricing-calculator-detalle.png)
+
+Resumen de la estimación mensual usada en la tabla de costos del escenario pequeño:
+
+![AWS Pricing Calculator resumen](evidencia/aws-pricing-calculator-resumen.png)
 
 ## Extensión del framework propio
 
